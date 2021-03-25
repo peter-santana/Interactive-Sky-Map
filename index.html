@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+
+<head>
+
+  <title>Interactive SkyMap</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+  <!-- Import css sheet -->
+  <style type="text/css"> @import url(style.css); </style>
+
+  <!-- Load d3.js -->
+  <script src = "https://d3js.org/d3.v4.min.js"> </script>
+
+
+  <!-- Load color scale -->
+  <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+
+
+  <!-- A bit of CSS: change stroke color of circle on hover (white -> black) -->
+  <style>
+    .bubbles {
+      stroke-width: 2px;
+      stroke: white;
+    }
+    .bubbles:hover {
+      stroke: black;
+    }
+  </style>
+</head>
+
+
+
+<body>
+  <div id="header-container">
+    <div id="header">
+      <h1><a href="#">Interactive<span>Skymap</span></a></h1>
+      <p id="slogan">Pre-loaded with https://exoplanetarchive.ipac.caltech.edu/</p>
+      <ul>
+        <li><a href="#" class="active">home</a></li>
+        <li><a href="#">about</a></li>
+        <li><a href="#">work</a></li>
+        <li><a href="#">contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="content">
+    <h2>About this project</h2>
+    <p>
+      The purpose of this project is to establish a web-app that is constantly up to date with confirmed planets data from the NASA Exoplanet Archives using the API.
+      We are plotting stellar systems Declination vs Right Ascension using D3
+    </p>
+    <br>
+    <br>
+
+    <h2>Sample Graph</h2>
+    <!-- Create a div where the graph will take place -->
+    <div id="my_dataviz"></div>
+    <script src="deploygraph.js"></script>
+
+    <!-- Short text regarding graph -->
+    <div class="post-bottom"> This is an interactive skymap</div>
+
+    <!--
+    <h2>Some sample elements</h2>
+    <p>This is an unordered list</p>
+    <ul>
+      <li>Item 1</li>
+      <li>Item 2</li>
+      <li>Item 3</li>
+    </ul>
+    <p>This is an ordered list</p>
+    <ol>
+      <li>Item 1</li>
+      <li>Item 2</li>
+      <li>Item 3</li>
+    </ol>
+    <p>This is code</p>
+    <code>echo ($a==3) ? 'Yes' : 'No';</code>
+    <p>This is a quote</p>
+    <blockquote>"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas luctus luctus elit. Etiam aliquet lectus in magna. Praesent vitae tellus vel massa sodales sodales. Donec rutrum neque et dolor. Aliquam ante dolor, feugiat quis, elementum vitae, tempor at, sem. Nulla adipiscing. Nunc leo. Quisque tempus semper diam."</blockquote>
+    <p>This is a form</p>
+    <form action="#">
+      <label for="name">Name:</label>
+      <input type="text" id="name" class="textbox" />
+      <label for="email">Email:</label>
+      <input type="text" id="email" class="textbox" />
+      <label for="msg">Message:</label>
+      <textarea cols="50" rows="15" id="msg"></textarea>
+      <input type="submit" value="Submit" class="button" />
+    </form>
+    <div class="post-bottom"> <span class="post-by"><a href="#">Dave</a> - Mar 23, 2007 @ 8:39PM</span> <span class="post-actions"><a href="#" class="readmore-link">Read More</a><a href="#" class="comment-link">Comments (4)</a></span> </div>
+  -->
+
+  <div class="clear"></div>
+</div>
+<div id="footer">
+  <p id="copyright">&copy; 2021 Genesis Velazquez <a target="_blank" href="http://validator.w3.org/check?uri=referer">XHTML</a> | <a target="_blank" href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a></p>
+  <p id="design">Site Design by <a href="http://www.galengrover.com">Galen Grover</a></p>
+  <div class="clear"></div>
+</div>
+
+  <!-- Load script file -->
+
+</body>
+</html>
