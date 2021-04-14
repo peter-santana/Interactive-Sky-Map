@@ -10,7 +10,6 @@
 var margin = {top: 10, right: 30, bottom: 50, left: 50},
 width = 780 - margin.left - margin.right,
 height = 485.4 - margin.top - margin.bottom;
-
 // append the svg object to the body of the page
 var svg = d3.select("#my_dataviz")
   .append("svg")
@@ -29,7 +28,7 @@ var mapimage = svg.append("image")
   .attr("height", height)
 
   //Read the planet data
-  d3.json("https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=exoplanets&select=dec,ra,pl_hostname,pl_pnum,st_rad,st_teff&format=json", function(data) {
+  d3.json("https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=exoplanets&select=dec,ra,pl_hostname,pl_pnum,st_rad,st_teff,st_optmag,st_dist,pl_orbsmax&format=json", function(data) {
 
 
   //New array to insert data without dupes.
@@ -52,22 +51,50 @@ var mapimage = svg.append("image")
     noDupes.push(uniqueObject[i]);
   } 
 
+/**Note April 14 - Speak to Abel Mendez about this math
+  //New array to insert candidates
+  let exoCandidates = [];
+
+  //lstar/lsun=((10(-4.72))/-2.5)
+
+  for (let i in data) {
+    //Verify if have sufficient data
+    //st_optmag = stellar optical magnitude 
+    //Absolute visual magnitude
+    let avm = data[i]['st_optmag'] - 5 *Math.log(data[i]['st_dist']/10)
+
+    //Bolometric magnitude of star
+    if (data[i]['st_rad']>0 && data[i]['st_optmag']>0 && data[i]['pl_orbsmax']>0)
+    {
+
+    //Habitable zone calculations per https://www.planetarybiology.com/calculating_habitable_zone.html
+    let hab_zonemin = Math.sqrt(data[i]['st_optmag']/1.1);
+    let hab_zonemax = Math.sqrt(data[i]['st_optmag']/0.53);
+    // Verify if planet in habitable zone
+
+      if (data[i]['pl_orbsmax'] >= hab_zonemin && data[i]['pl_orbsmax']<=hab_zonemax)
+      {
+        exoCandidates.push(data[i], hab_zonemax, hab_zonemin);
+      }
+    }
+  }
+  **/
 
   // Add X axis Bottom
   var x = d3.scaleLinear()
   .domain([0,24])
-  .range([width,0])
+  .range([width,0]);
   svg.append("g")
   .attr("transform", "translate(0," + height + ")")
   .call(d3.axisBottom(x));
 
-    // Add X axis top
-    //var xtop = d3.scaleLinear()
-    //.domain([24, 0])
-    //.range([width, 0]);
-    //svg.append("g")
-    //.attr("transform", "translate(0," - height + ")")
-    //.call(d3.axisBottom(xtop));
+  // Add X axis top
+  var xtop = d3.scaleLinear()
+  .domain([0,24])
+  .range([width, 0]);
+  svg.append("g")
+  .attr("transform", "translate(0," - height + ")")
+  .call(d3.axisBottom(xtop));
 
 
   // Add Y axis
@@ -78,12 +105,12 @@ var mapimage = svg.append("image")
   .call(d3.axisLeft(y).ticks(6));
   
   // Add Right Y axis
- // var yright = d3.scaleLinear()
- // .domain([-90, 90])
-  //.range([0,height]);
-  //svg.append("g")
-  //.attr("transform", "translate("+width+",0)")
-  //.call(d3.axisRight(yright).ticks(6));
+  var yright = d3.scaleLinear()
+  .domain([-90, 90])
+  .range([height,0]);
+  svg.append("g")
+  .attr("transform", "translate("+width+",0)")
+  .call(d3.axisRight(yright).ticks(6));
 
   // Add a scale for bubble size
   var z = d3.scaleLinear()
@@ -188,6 +215,8 @@ var mapimage = svg.append("image")
   .attr("cx", function (d) { return x(d.ra* (1/15)); } ) //1 hour RA = 15 Degrees RA
   .attr("cy", function (d) { return y(d.dec); } )
   .attr("r", 3)
+  .style("stroke", "gray")
+  .style("stroke-width", 1)
   .style("fill", setColor)
   .style("opacity", 1)
     // -3- Trigger the functions
@@ -197,3 +226,6 @@ var mapimage = svg.append("image")
     .on("mouseleave", hideTooltip )
 
   })
+
+
+
