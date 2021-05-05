@@ -12,7 +12,8 @@ class star {
 		this.setStRad(st_rad);
 		this.setApMag(st_optmag);
 		this.setDist(st_dist);
-		this.setSpecTypes();
+		this.setSpecTypes(this.teff);
+		//this.setPlNames();
 		this.setHabZone();
 	}
 	// Setter
@@ -40,7 +41,7 @@ class star {
 	setDist(st_dist) {
 		this.Dist=st_dist;
 	}
-	setSpecTypes(){
+	setSpecTypes(teff){
 		if (this.teff<3500) {
 			this.SpecType = "M";
 			this.Color = "Red";
@@ -73,6 +74,11 @@ class star {
     		this.teff=null;
     	}
 	}
+
+	setPlNames() {
+		planets =[];
+	}
+
 	setHabZone() {
 		if (this.BolCons!=null) {
 			var absmag = this.ApMag-5*Math.log(this.Dist/10);
@@ -118,6 +124,12 @@ class star {
 	}
 	getHabZoneMax() {
 		return this.HabZoneMax;
+	}
+	insertPlNames(planet) {
+		this.planets.push(planet);
+	}
+	getPlNames() {
+		return this.planets;
 	}
 }
 

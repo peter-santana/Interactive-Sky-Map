@@ -31,8 +31,9 @@ var mapimage = svg.append("image")
   .attr("width", width)
   .attr("height", height)
 
+
   //Read the planet data
-  d3.json("https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=exoplanets&select=dec,ra,pl_hostname,pl_name,pl_pnum,st_rad,st_teff,st_optmag,st_dist,pl_orbsmax&format=json", function(data) {
+  d3.json("https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+pl_name,hostname,sy_pnum,ra,dec,st_teff,st_rad,sy_vmag,sy_dist,pl_orbsmax+from+pscomppars&format=json", function(data) {
 
   // Declare arrays to store star objects and planet objects
   let _stars = []; //empty stars array
@@ -45,11 +46,11 @@ var mapimage = svg.append("image")
 
     //Creating object from class stars for every star in map.
     if(i<1) {
-      entry = new star(data[i]['pl_hostname'],data[i]['ra'],data[i]['dec'],data[i]['st_teff'],data[i]['pl_pnum'],data[i]['st_rad'],data[i]['st_optmag'],data[i]['st_dist']);
+      entry = new star(data[i]['hostname'],data[i]['ra'],data[i]['dec'],data[i]['st_teff'],data[i]['sy_pnum'],data[i]['st_rad'],data[i]['sy_vmag'],data[i]['sy_dist']);
       _stars.push(entry);
     } else {
       for (let j in _stars) { //Loop through stars array looking for dupes
-        if (_stars[j].getName() == data[i]['pl_hostname']) {
+        if (_stars[j].getName() == data[i]['hostname']) {
           duplicate = true;
         } else {
           duplicate = false;
